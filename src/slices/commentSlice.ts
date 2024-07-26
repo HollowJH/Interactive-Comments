@@ -4,8 +4,8 @@ import { CommentStructure, Structure } from "./CommentState";
 const initialState: Structure = {
     "currentUser": {
         "image": {
-            "png": "./images/avatars/image-juliusomo.png",
-            "webp": "./images/avatars/image-juliusomo.webp"
+            "png": "/public/avatars/image-juliusomo.png",
+            "webp": "/public/avatars/image-juliusomo.webp"
         },
         "username": "juliusomo"
     },
@@ -17,8 +17,8 @@ const initialState: Structure = {
             "score": 12,
             "user": {
                 "image": {
-                    "png": "./images/avatars/image-amyrobson.png",
-                    "webp": "./images/avatars/image-amyrobson.webp"
+                    "png": "/public/avatars/image-amyrobson.png",
+                    "webp": "/public/avatars/image-amyrobson.webp"
                 },
                 "username": "amyrobson"
             },
@@ -31,8 +31,8 @@ const initialState: Structure = {
             "score": 5,
             "user": {
                 "image": {
-                    "png": "./images/avatars/image-maxblagun.png",
-                    "webp": "./images/avatars/image-maxblagun.webp"
+                    "png": "/public/avatars/image-maxblagun.png",
+                    "webp": "/public/avatars/image-maxblagun.webp"
                 },
                 "username": "maxblagun"
             },
@@ -45,8 +45,8 @@ const initialState: Structure = {
                     "replyingTo": "maxblagun",
                     "user": {
                         "image": {
-                            "png": "./images/avatars/image-ramsesmiron.png",
-                            "webp": "./images/avatars/image-ramsesmiron.webp"
+                            "png": "/public/avatars/image-ramsesmiron.png",
+                            "webp": "/public/avatars/image-ramsesmiron.webp"
                         },
                         "username": "ramsesmiron"
                     }
@@ -59,8 +59,8 @@ const initialState: Structure = {
                     "replyingTo": "ramsesmiron",
                     "user": {
                         "image": {
-                            "png": "./images/avatars/image-juliusomo.png",
-                            "webp": "./images/avatars/image-juliusomo.webp"
+                            "png": "/public/avatars/image-juliusomo.png",
+                            "webp": "/public/avatars/image-juliusomo.webp"
                         },
                         "username": "juliusomo"
                     }
@@ -93,8 +93,8 @@ export const commentSlice = createSlice({
                 "score": 0,
                 "user": {
                     "image": {
-                        "png": "./images/avatars/image-juliusomo.png",
-                        "webp": "./images/avatars/image-juliusomo.webp"
+                        "png": "/public/avatars/image-juliusomo.png",
+                        "webp": "/public/avatars/image-juliusomo.webp"
                     },
                     "username": "juliusomo"
                 },
@@ -130,7 +130,14 @@ export const commentSlice = createSlice({
         },
         updateVotes: (state, payload) => {
             const index = state.comments.findIndex(elem => elem.id === payload.payload[0].id)
-            state.comments[index].score += payload.payload[1]
+            if (index !== -1) state.comments[index].score += payload.payload[1]
+            else {
+                for (let i = 0; i < state.comments.length; i++) {
+                    if (state.comments[i].replies?.length === 0 || state.comments[i + 1]?.id < payload.payload[0].id) continue
+                    const replyToIndex = state.comments[i].replies?.findIndex((elem: CommentStructure) => elem.id === payload.payload[0].id)
+                    state.comments[i].replies[replyToIndex].score += payload.payload[1]
+                }
+            }
         },
         insertReplyTo: (state, commentReplied) => {
             const index = state.comments.findIndex(elem => elem.id === commentReplied.payload.id)
@@ -143,15 +150,15 @@ export const commentSlice = createSlice({
                 "replyingTo": commentReplied.payload.user.username,
                 "user": {
                     "image": {
-                        "png": "./images/avatars/image-juliusomo.png",
-                        "webp": "./images/avatars/image-juliusomo.webp"
+                        "png": "/public/avatars/image-juliusomo.png",
+                        "webp": "/public/avatars/image-juliusomo.webp"
                     },
                     "username": "juliusomo"
                 }
             }
 
             if (index !== -1) {
-                state.comments.splice(index + 1, 0, commentScaffold)
+                state.comments[index].replies.push(commentScaffold)
             } else {
                 for (let i = 0; i < state.comments.length; i++) {
                     if (state.comments[i].replies?.length === 0 || state.comments[i + 1]?.id < commentReplied.payload.id) continue
@@ -162,7 +169,6 @@ export const commentSlice = createSlice({
         },
         confirmComment: (state, edittedComment) => {
             const index = state.comments.findIndex(elem => elem.id === edittedComment.payload[0])
-            edittedComment.payload.id = Math.abs(edittedComment.payload[0])
             const content = edittedComment.payload[1]
 
             if (!edittedComment.payload[2]) {  
