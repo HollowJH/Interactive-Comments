@@ -4,8 +4,8 @@ import { CommentStructure, Structure } from "./CommentState";
 const initialState: Structure = {
     "currentUser": {
         "image": {
-            "png": "/public/avatars/image-juliusomo.png",
-            "webp": "/public/avatars/image-juliusomo.webp"
+            "png": "/avatars/image-juliusomo.png",
+            "webp": "/avatars/image-juliusomo.webp"
         },
         "username": "juliusomo"
     },
@@ -17,8 +17,8 @@ const initialState: Structure = {
             "score": 12,
             "user": {
                 "image": {
-                    "png": "/public/avatars/image-amyrobson.png",
-                    "webp": "/public/avatars/image-amyrobson.webp"
+                    "png": "/avatars/image-amyrobson.png",
+                    "webp": "/avatars/image-amyrobson.webp"
                 },
                 "username": "amyrobson"
             },
@@ -31,8 +31,8 @@ const initialState: Structure = {
             "score": 5,
             "user": {
                 "image": {
-                    "png": "/public/avatars/image-maxblagun.png",
-                    "webp": "/public/avatars/image-maxblagun.webp"
+                    "png": "/avatars/image-maxblagun.png",
+                    "webp": "/avatars/image-maxblagun.webp"
                 },
                 "username": "maxblagun"
             },
@@ -45,8 +45,8 @@ const initialState: Structure = {
                     "replyingTo": "maxblagun",
                     "user": {
                         "image": {
-                            "png": "/public/avatars/image-ramsesmiron.png",
-                            "webp": "/public/avatars/image-ramsesmiron.webp"
+                            "png": "/avatars/image-ramsesmiron.png",
+                            "webp": "/avatars/image-ramsesmiron.webp"
                         },
                         "username": "ramsesmiron"
                     }
@@ -59,8 +59,8 @@ const initialState: Structure = {
                     "replyingTo": "ramsesmiron",
                     "user": {
                         "image": {
-                            "png": "/public/avatars/image-juliusomo.png",
-                            "webp": "/public/avatars/image-juliusomo.webp"
+                            "png": "/avatars/image-juliusomo.png",
+                            "webp": "/avatars/image-juliusomo.webp"
                         },
                         "username": "juliusomo"
                     }
@@ -93,8 +93,8 @@ export const commentSlice = createSlice({
                 "score": 0,
                 "user": {
                     "image": {
-                        "png": "/public/avatars/image-juliusomo.png",
-                        "webp": "/public/avatars/image-juliusomo.webp"
+                        "png": "/avatars/image-juliusomo.png",
+                        "webp": "/avatars/image-juliusomo.webp"
                     },
                     "username": "juliusomo"
                 },
@@ -150,8 +150,8 @@ export const commentSlice = createSlice({
                 "replyingTo": commentReplied.payload.user.username,
                 "user": {
                     "image": {
-                        "png": "/public/avatars/image-juliusomo.png",
-                        "webp": "/public/avatars/image-juliusomo.webp"
+                        "png": "/avatars/image-juliusomo.png",
+                        "webp": "/avatars/image-juliusomo.webp"
                     },
                     "username": "juliusomo"
                 }
